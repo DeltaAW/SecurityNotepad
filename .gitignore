@@ -1,0 +1,57 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Rr]elease/
+[Dd]ebug/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio cache files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code / JetBrains
+.idea/
+.vscode/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Auto generated files
+Generated\ Files/
+*.g.*
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.ipch
+*.iobj
+*.idb
+*.tlog
+
+# Publish output
+publish/
+*.Publish.xml
+
+# Others
+*.dbmdl
+*.bak
+*.log
+*.tmp
+*.cache
