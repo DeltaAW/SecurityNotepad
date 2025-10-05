@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IOPath = System.IO.Path;
 
 namespace SecurityNotepad
 {
@@ -23,31 +22,13 @@ namespace SecurityNotepad
     /// IncorrectPassOrLog.Visibility = Visibility.Visible; для вывода ложного пароля
     public partial class EntryWindow : Window
     {
-
-        public string DocumentsPath { get; private set; }
-        public string FolderPath { get; private set; }
-        public string FilePath { get; private set; }
+        CheckingForFoldersAndFiles checkingForFoldersAndFiles = new();
+     
         public EntryWindow()
-        {
-            DocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); // получение пути к папке Document
-            FolderPath = IOPath.Combine(DocumentsPath, "NotepadAccount");
-            FilePath = IOPath.Combine(FolderPath, "Account.json");
-
+        {         
             InitializeComponent();
-            CreateFoldersForStrongAccounts();
+            checkingForFoldersAndFiles.CreateFoldersForStrongAccounts();
         }
-
-        public void CreateFoldersForStrongAccounts()
-        {
-            if (!CheckingForFileAvaliability())
-            {
-                Directory.CreateDirectory(FolderPath);
-                File.Create(FilePath);
-            }
-        }
-
-        public bool CheckingForFileAvaliability() => Directory.Exists(IOPath.Combine(DocumentsPath, "NotepadAccount"));
-
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordPlaceholder.Visibility =

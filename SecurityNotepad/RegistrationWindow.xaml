@@ -48,10 +48,23 @@
             </Path.Data>
         </Path>
         <Ellipse Width="3" Height="3" Stroke="White" StrokeThickness="0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="184" Canvas.Top="167"/>
-        <Line X1="191.5" Y1="141.9" X2="191.5" Y2="145.3" Stroke="White" StrokeThickness="1" Height="144" Width="192" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="-6" Canvas.Top="28"/>
+        <Line X1="191.5" Y1="141.9" X2="191.5" Y2="145.3" Stroke="White" StrokeThickness="1" Height="144" Width="192" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="-6" Canvas.Top="28"/>
+
+        <!--изображение второго замочка в графе повторите пароль-->
+        <Rectangle Width="11" Height="9" Stroke="White" StrokeThickness="1" Canvas.Left="180" Canvas.Top="196" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <Ellipse Width="3" Height="3" Stroke="White" StrokeThickness="0.5" Canvas.Left="184" Canvas.Top="198" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Line X1="191.5" Y1="141.9" X2="191.5" Y2="145.3" Stroke="White" StrokeThickness="1" Height="144" Width="192" Canvas.Left="-6" Canvas.Top="59" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <Path Stroke="White" StrokeThickness="1" Stretch="Fill" Width="8" Canvas.Left="181.5" Canvas.Top="190" Height="6" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Path.Data>
+                <PathGeometry Figures="M50,150 A100,100,0,0,1,300,150"/>
+            </Path.Data>
+        </Path>
 
         <!--интерфейс окна входа-->
-        <Button x:Name="Registration" Content="register" Foreground="White" Width="140" Height="19" Background="#FF111115" BorderThickness="0" HorizontalAlignment="Center" Canvas.Left="180" Canvas.Top="211" Click="Button_RegisterButton" VerticalAlignment="Top">
+        <Button x:Name="Registration" Content="register" Foreground="White" Width="140" Height="19" Background="#FF111115" BorderThickness="0" HorizontalAlignment="Center" Canvas.Left="180" Canvas.Top="230" Click="Button_RegisterButton" VerticalAlignment="Top">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -59,8 +72,10 @@
             </Button.Resources>
         </Button>
 
-        <TextBlock x:Name="LoginIsBusy" Canvas.Left="180" TextAlignment="Center" TextWrapping="Wrap" IsHitTestVisible="False" Foreground="DarkRed" Text="The login is busy" Canvas.Top="180" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" Height="14" Background="{x:Null}" FontSize="10"  Visibility="Collapsed"/>
-
+        <!--Вывод ошибок-->
+        <TextBlock x:Name="RegisterError" Canvas.Left="180" TextAlignment="Center" TextWrapping="Wrap" IsHitTestVisible="False" Foreground="DarkRed" Text="" Canvas.Top="211" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" Height="14" Background="{x:Null}" FontSize="10" Visibility="Collapsed"/>
+               
+        <!--графа с логином-->
         <Grid Canvas.Left="195" Canvas.Top="129" Width="125">
             <TextBox x:Name="BackLogin" 
              TextChanged="TextBox_RegisterLogin"
@@ -69,18 +84,24 @@
             <TextBlock x:Name="LoginBox" 
                Text="Login" 
                Foreground="Gray" 
-               Margin="3,2,0,0"
+               Margin="0,2,0,0"
                IsHitTestVisible="False"/>
         </Grid>
 
-        <PasswordBox x:Name="PasswordRegister"  PasswordChanged="PasswordBox_RegisterPassword" Canvas.Left="196" Canvas.Top="159" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" BorderThickness="0,0,0,0" BorderBrush="{x:Null}"/>
-
-        <TextBlock x:Name="RegisterPassword" Text="Password" Foreground="Gray" IsHitTestVisible="False" Canvas.Left="196" Canvas.Top="159" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <!--графа с паролем-->
+        <PasswordBox x:Name="PasswordRegister"  PasswordChanged="PasswordBox_RegisterPassword" Canvas.Left="196" Canvas.Top="161" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" BorderBrush="{x:Null}"/>
+        <TextBlock x:Name="RegisterPassword" Text="Password" Foreground="Gray" IsHitTestVisible="False" Canvas.Left="195" Canvas.Top="161" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <TextBlock Canvas.Left="180" TextWrapping="Wrap" Text="Registration" IsHitTestVisible="False" Canvas.Top="71" HorizontalAlignment="Left" VerticalAlignment="Center" Width="140" Height="28" Foreground="White" FontSize="20" FontFamily="Tempus Sans ITC"/>
 
+        <!--кнопки выхода и перемещение назад-->
         <Button x:Name="ExiteButton" Content="✕" Canvas.Left="454" HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Background="{x:Null}" Width="46" Foreground="White" FontSize="22" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" Click="Button_ExiteButton" Canvas.Top="-7"/>
-
         <Button x:Name="BackButton" Content="☚" Height="40" Background="{x:Null}" Width="46" Foreground="White" FontSize="22" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" Click="Button_BackButton" Canvas.Top="-12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <Line X1="180" Y1="210" X2="320" Y2="210" Stroke="Gray" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="212"/>
+
+        <!--графа с повторением пароля-->
+        <TextBlock x:Name="RegisterPasswordReplay" Text="Repeat the password" Foreground="Gray" IsHitTestVisible="False" Canvas.Left="196" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="PasswordRegisterReplay"  PasswordChanged="PasswordBox_RegisterPasswordReplay" Canvas.Left="196" Canvas.Top="191" Width="120" Background="{x:Null}" BorderThickness="0,0,0,0" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Canvas>
 </Window>
