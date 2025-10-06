@@ -20,6 +20,7 @@ namespace SecurityNotepad
     /// Логика взаимодействия для entryWindow.xaml
     /// </summary>
     /// IncorrectPassOrLog.Visibility = Visibility.Visible; для вывода ложного пароля
+    /// bool ok = PasswordHasher.Verify("mySuperSecret", stored); // true
     public partial class EntryWindow : Window
     {
         CheckingForFoldersAndFiles checkingForFoldersAndFiles = new();

@@ -48,10 +48,35 @@ namespace SecurityNotepad
         }
         public void Button_RegisterButton(object sender, RoutedEventArgs e)
         {
-            if(ValidateRegistration())
+            if (ValidateRegistration())
             {
-                UserAccount user = new UserAccount(BackLogin.Text, PasswordRegister.Password);
-                user.SaveAccount(user);
+                var manager = new AccountManager(); // менеджер аккаунтов
+
+                if (!manager.IsLoginAvailable(BackLogin.Text))
+                {
+                    // логин уже существует
+                    RegistrationError("This login is already taken.");
+                    return;
+                }
+
+                // хэшируем пароль
+                var PasswordHash = PasswordHasher.Hash(PasswordRegister.Password);
+
+                // создаём пользователя
+                UserAccount user = new UserAccount(BackLogin.Text, PasswordHash);
+
+                // сохраняем через менеджер
+                if (manager.AddAccount(user))
+                {
+                    // возвращаемся на окно входа
+                    EntryWindow entryWindow = new();
+                    Close();
+                    entryWindow.Show();
+                }
+                else
+                {
+                    RegistrationError("Error while saving user.");
+                }
             }
         }
         public void Button_ExiteButton(object sender, RoutedEventArgs e)

@@ -9,65 +9,85 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace SecurityNotepad
 {
     class UserAccount
     {
-        CheckingForFoldersAndFiles checkFile = new();
         public string Login { get; set; }
-        public string Password { get; set; }
         public string PasswordHash { get; set; } // Хэш пароля
-        public string FolderName { get; set; } // для личной папки пользователя
+        public string FolderName { get; set; }   // для личной папки пользователя
 
-        public Random random = new Random();
-
-        [JsonIgnore]
-        public List<UserAccount> accounts { get; set; }
-
-        public UserAccount(string login, string password)
+        public UserAccount(string login, string passwordhash)
         {
             Login = login;
-            Password = password;
-        }
-        public UserAccount() 
-        {
-            FolderName = random.Next(100000, 999999).ToString(); // Генерация случайного имени папки
+            PasswordHash = passwordhash;
+            FolderName = new Random().Next(100000, 999999).ToString(); // Генерация случайного имени папки
         }
 
-        public void CheckingAccounts() 
+        public UserAccount()
         {
-            if (File.Exists(checkFile.FilePath))
+            FolderName = new Random().Next(100000, 999999).ToString();
+        }
+    }
+
+    class AccountManager
+    {
+        private List<UserAccount> accounts = new List<UserAccount>();
+
+        public AccountManager()
+        {
+            LoadAccounts();
+        }
+
+        private void LoadAccounts()
+        {
+            if (File.Exists(CheckingForFoldersAndFiles.FilePath))
             {
-                string json = File.ReadAllText(checkFile.FilePath);
+                string json = File.ReadAllText(CheckingForFoldersAndFiles.FilePath);
 
                 if (!string.IsNullOrWhiteSpace(json))
                 {
                     accounts = JsonSerializer.Deserialize<List<UserAccount>>(json) ?? new List<UserAccount>();
                 }
-                else
-                {
-                    accounts = new List<UserAccount>();
-                }
-            }
-            else
-            {
-                accounts = new List<UserAccount>();
             }
         }
-        public void SaveAccount(UserAccount account)
+
+        private void SaveAccounts()
         {
-            // Загружаем уже существующие аккаунты
-            CheckingAccounts();
-
-            // Добавляем новый аккаунт в список
-            accounts.Add(account);
-
-            // Сериализуем список обратно в JSON
             string json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(CheckingForFoldersAndFiles.FilePath, json);
+        }
 
-            // Записываем в файл
-            File.WriteAllText(checkFile.FilePath, json);
+        /// <summary>
+        /// Проверка логина: возвращает true, если логина НЕТ в списке (свободен).
+        /// </summary>
+        public bool IsLoginAvailable(string loginToCheck)
+        {
+            return !accounts.Any(acc => acc.Login == loginToCheck);
+        }
+
+        /// <summary>
+        /// Добавление нового аккаунта.
+        /// </summary>
+        public bool AddAccount(UserAccount account)
+        {
+            if (!IsLoginAvailable(account.Login))
+                return false; // Логин уже занят
+
+            accounts.Add(account);
+            SaveAccounts();
+            return true;
+        }
+
+        /// <summary>
+        /// Получить все аккаунты.
+        /// </summary>
+        public List<UserAccount> GetAllAccounts()
+        {
+            return accounts;
         }
     }
 }
+

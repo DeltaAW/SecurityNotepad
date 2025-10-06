@@ -13,8 +13,8 @@ namespace SecurityNotepad
     class CheckingForFoldersAndFiles
     {
         public string DocumentsPath { get; set; }
-        static string FolderPath { get; set; }
-        public string FilePath { get; set; }
+        public static string FolderPath { get; set; }
+        public static string FilePath { get; set; }
 
 
         public CheckingForFoldersAndFiles()
