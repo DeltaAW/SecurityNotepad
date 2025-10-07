@@ -59,7 +59,7 @@
             </Button.Resources>
         </Button>
 
-        <TextBlock x:Name="IncorrectPassOrLog" Canvas.Left="180" TextAlignment="Center" TextWrapping="Wrap" IsHitTestVisible="False" Foreground="DarkRed" Text="Incorrect password or login" Canvas.Top="180" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" Height="14" Background="{x:Null}" FontSize="10"  Visibility="Collapsed"/>
+        <TextBlock x:Name="LogInError" Canvas.Left="180" TextAlignment="Center" TextWrapping="Wrap" IsHitTestVisible="False" Foreground="DarkRed" Text="" Canvas.Top="180" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" Height="14" Background="{x:Null}" FontSize="10"  Visibility="Collapsed"/>
 
         <Grid Canvas.Left="195" Canvas.Top="129" Width="125">
             <TextBox x:Name="Login" 

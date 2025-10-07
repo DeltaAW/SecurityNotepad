@@ -18,9 +18,6 @@ namespace SecurityNotepad
     {
         public MainWindow()
         {
-            EntryWindow entryWindow = new();
-            entryWindow.Show();
-
             InitializeComponent();
         }
     }

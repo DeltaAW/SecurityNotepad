@@ -13,7 +13,7 @@ using System.Text.Json;
 
 namespace SecurityNotepad
 {
-    class UserAccount
+    public class UserAccount
     {
         public string Login { get; set; }
         public string PasswordHash { get; set; } // Хэш пароля
@@ -25,68 +25,75 @@ namespace SecurityNotepad
             PasswordHash = passwordhash;
             FolderName = new Random().Next(100000, 999999).ToString(); // Генерация случайного имени папки
         }
-
-        public UserAccount()
-        {
-            FolderName = new Random().Next(100000, 999999).ToString();
-        }
     }
 
-    class AccountManager
+    public class AccountManager
     {
-        private List<UserAccount> accounts = new List<UserAccount>();
+        private readonly string accountsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Accounts");
 
         public AccountManager()
         {
-            LoadAccounts();
+            if (!Directory.Exists(accountsFolder))
+                Directory.CreateDirectory(accountsFolder);
         }
 
-        private void LoadAccounts()
+        /// <summary>
+        /// Добавление нового аккаунта (принимает логин и пароль).
+        /// </summary>
+        public bool AddAccount(string login, string password)
         {
-            if (File.Exists(CheckingForFoldersAndFiles.FilePath))
+            try
             {
-                string json = File.ReadAllText(CheckingForFoldersAndFiles.FilePath);
+                string userFile = Path.Combine(accountsFolder, login + ".txt");
 
-                if (!string.IsNullOrWhiteSpace(json))
-                {
-                    accounts = JsonSerializer.Deserialize<List<UserAccount>>(json) ?? new List<UserAccount>();
-                }
+                if (File.Exists(userFile))
+                    return false; // уже существует
+
+                string hash = PasswordHasher.Hash(password);
+                File.WriteAllText(userFile, hash);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        private void SaveAccounts()
+        /// <summary>
+        /// Добавление нового аккаунта (принимает UserAccount с уже хэшированным паролем).
+        /// </summary>
+        public bool AddAccount(UserAccount user)
         {
-            string json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(CheckingForFoldersAndFiles.FilePath, json);
+            try
+            {
+                string userFile = Path.Combine(accountsFolder, user.Login + ".txt");
+
+                if (File.Exists(userFile))
+                    return false; // уже существует
+
+                File.WriteAllText(userFile, user.PasswordHash);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        /// <summary>
-        /// Проверка логина: возвращает true, если логина НЕТ в списке (свободен).
-        /// </summary>
-        public bool IsLoginAvailable(string loginToCheck)
+        public bool IsLoginAvailable(string login)
         {
-            return !accounts.Any(acc => acc.Login == loginToCheck);
+            string userFile = Path.Combine(accountsFolder, login + ".txt");
+            return !File.Exists(userFile);
         }
 
-        /// <summary>
-        /// Добавление нового аккаунта.
-        /// </summary>
-        public bool AddAccount(UserAccount account)
+        public string? GetPasswordHash(string login)
         {
-            if (!IsLoginAvailable(account.Login))
-                return false; // Логин уже занят
+            string userFile = Path.Combine(accountsFolder, login + ".txt");
 
-            accounts.Add(account);
-            SaveAccounts();
-            return true;
-        }
+            if (!File.Exists(userFile))
+                return null;
 
-        /// <summary>
-        /// Получить все аккаунты.
-        /// </summary>
-        public List<UserAccount> GetAllAccounts()
-        {
-            return accounts;
+            return File.ReadAllText(userFile);
         }
     }
 }
