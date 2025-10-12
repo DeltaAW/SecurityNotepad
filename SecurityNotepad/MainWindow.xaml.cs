@@ -20,5 +20,30 @@ namespace SecurityNotepad
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged()
+        {
+
+        }
+        private void Button_Size(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else if (WindowState == WindowState.Normal)
+                WindowState = WindowState.Maximized;
+        }
+        private void Button_Exite(object sender, RoutedEventArgs e) => Close();
+        private void Button_Minimize(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+        // Событие MouseDown для Canvas (или панели заголовка)
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+        private void Button_File(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

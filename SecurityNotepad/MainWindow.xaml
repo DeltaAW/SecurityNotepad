@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SecurityNotepad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
+        x:Name="StartWindow" Title="MainWindow" Height="450" Width="800" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="{x:Null}" WindowState="Maximized">
     <Grid>
+        <!-- Верхняя панель -->
+        <Grid Background="#FF1C1C21" Height="40" VerticalAlignment="Top" MouseDown="TitleBar_MouseDown">
 
+            <!-- Кнопки управления окна -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                <Button Click="Button_Minimize" Content="—" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray"/>
+                <Button Click="Button_Size" Content="☐" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray"/>
+                <Button Click="Button_Exite" Content="✕" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray"/>                
+            </StackPanel>
+            <!--верхняя панель-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,10,0">
+                <Button Click="Button_File" Content="File" Width="50" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Основная рабочая область -->
+        <Grid Margin="0,40,0,0" Background="#FF1C1C21">
+            <!-- Здесь будут другие элементы приложения -->
+        </Grid>
     </Grid>
 </Window>
+
