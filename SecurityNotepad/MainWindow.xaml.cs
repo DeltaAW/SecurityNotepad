@@ -20,11 +20,6 @@ namespace SecurityNotepad
         {
             InitializeComponent();
         }
-
-        private void TextBox_TextChanged()
-        {
-
-        }
         private void Button_Size(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
@@ -42,6 +37,14 @@ namespace SecurityNotepad
                 DragMove();
         }
         private void Button_File(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Account(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Print(object sender, RoutedEventArgs e)
         {
 
         }
